@@ -21,7 +21,15 @@ async function server() {
     await client.connect();
 
     const database = client.db("volunteer_db");
-    const volunteerCollection = database.collection("volunteers");
+    const eventCollection = database.collection("events");
+
+    //EVENTS GET API
+    app.get("/events", async (req, res) => {
+      const cursor = eventCollection.find({});
+      const events = await cursor.toArray();
+
+      res.json(events);
+    });
   } finally {
     // await client.close();
   }
